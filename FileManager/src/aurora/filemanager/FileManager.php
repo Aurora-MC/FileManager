@@ -37,6 +37,9 @@ class FileManager extends PluginBase implements Listener {
     /** @var FileManager $instance */
     private static $instance;
 
+    /** @var array $browsingPlayers */
+    protected $browsingPlayers = [];
+
     public function onEnable() {
         self::$instance = $this;
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -100,6 +103,12 @@ class FileManager extends PluginBase implements Listener {
         $form = $event->getForm();
         $result = $form->responseData;
 
+        if(isset($this->browsingPlayers[$player->getName()])) {
+            $this->openWindow($player, $this->browsingPlayers[$player->getName()]);
+            unset($this->browsingPlayers[$player->getName()]);
+            return;
+        }
+
         $dirsInPath = scandir($form->formData["content"]);
         array_shift($dirsInPath);
         array_shift($dirsInPath);
@@ -107,12 +116,25 @@ class FileManager extends PluginBase implements Listener {
         if(isset($dirsInPath[$result])) {
             $target = $form->formData["content"] . DIRECTORY_SEPARATOR . $dirsInPath[$result];
             if(is_file($target)) {
-                $player->sendMessage("§cInvalid file format");
+                $supported = ["txt", "json", "yml", "yaml", "properties", "lock", "cmd", "sh", "php"];
+                $e = explode(".", basename($target));
+                $suffix = array_pop($e);
+                if(in_array($suffix, $supported)) {
+                    $text = (string)file_get_contents($target);
+                    $textForm = new Form(basename($target), $text);
+                    $textForm->addButton("§9Close");
+                    $this->browsingPlayers[$player->getName()] = $form->formData["content"];
+                    $player->sendForm($textForm);
+                    return;
+                }
+                $player->sendMessage("§cInvalid file");
                 return;
             }
             $this->openWindow($player, $target);
             return;
         }
+
+        if($result === null) return;
 
         // back button
         $path = dirname($form->formData["content"]);
