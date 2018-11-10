@@ -20,8 +20,10 @@ declare(strict_types=1);
 
 namespace aurora\filemanager\form;
 
+use const pocketmine\BASE_VERSION;
 use pocketmine\Player;
 use pocketmine\Server;
+use const pocketmine\VERSION;
 
 /**
  * Class Form
@@ -73,7 +75,13 @@ class Form implements \pocketmine\form\Form {
      */
     public function handleResponse(Player $player, $data): void {
         $this->responseData = $data;
-        Server::getInstance()->getPluginManager()->callEvent(new PlayerFormResponseEvent($player, $this));
+        $event = new PlayerFormResponseEvent($player, $this);
+        if(BASE_VERSION !== "4.0.0") {
+            Server::getInstance()->getPluginManager()->callEvent($event);
+        } else {
+            $event->call();
+        }
+
     }
 
     /**
