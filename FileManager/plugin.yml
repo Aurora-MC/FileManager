@@ -1,0 +1,17 @@
+name: FileManager
+api: 3.0.0
+version: 1.0.0
+author: CodenameAurora
+authors: [VixikHD]
+main: aurora\filemanager\FileManager
+description: Manage with server files in game!
+
+commands:
+  filemanager:
+    description: Opens file manager form
+    aliases: [fm]
+
+permissions:
+  fm.action.open:
+    default: op
+    description: Allows to open file manager
