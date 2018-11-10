@@ -1,5 +1,21 @@
 <?php
 
+/**
+ *    Copyright 2018 Codename-Aurora
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 declare(strict_types=1);
 
 namespace aurora\filemanager;
@@ -72,6 +88,7 @@ class FileManager extends PluginBase implements Listener {
             }
         }
 
+        $form->addButton("§cBack");
         $player->sendForm($form);
     }
 
@@ -87,12 +104,18 @@ class FileManager extends PluginBase implements Listener {
         array_shift($dirsInPath);
         array_shift($dirsInPath);
 
-        $target = $form->formData["content"] . DIRECTORY_SEPARATOR . $dirsInPath[$result];
-        if(is_file($target)) {
-            $player->sendMessage("§cInvalid file format");
+        if(isset($dirsInPath[$result])) {
+            $target = $form->formData["content"] . DIRECTORY_SEPARATOR . $dirsInPath[$result];
+            if(is_file($target)) {
+                $player->sendMessage("§cInvalid file format");
+                return;
+            }
+            $this->openWindow($player, $target);
             return;
         }
-        $this->openWindow($player, $target);
-    }
 
+        // back button
+        $path = dirname($form->formData["content"]);
+        $this->openWindow($player, $path);
+    }
 }
