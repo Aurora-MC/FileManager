@@ -12,6 +12,12 @@ commands:
     aliases: [fm]
 
 permissions:
-  fm.action.open:
+  fm:
+    default: false
+    children:
+  fm.action:
     default: op
-    description: Allows to open file manager
+    children:
+  fm.action.open:
+    deafult: op
+    description: "Allows players to open FileManager"
