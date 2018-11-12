@@ -86,9 +86,7 @@ class FileManager extends PluginBase implements Listener {
         array_shift($dirsInPath);
         array_shift($dirsInPath);
         foreach ($dirsInPath as $directory) {
-            if($directory != ".." && $directory != ".") {
-                $form->addButton("§7" . $directory);
-            }
+            $form->addButton("§7" . $directory);
         }
 
         $form->addButton("§cBack");
