@@ -62,7 +62,7 @@ class FileManager extends PluginBase implements Listener {
      */
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
         if(!$sender->hasPermission("fm.action.open")) {
-            $sender->sendMessage("§cYou have not permissions to use this command");
+            $sender->sendMessage("§cYou have no permission to open this form");
             return false;
         }
         if(!$sender instanceof Player) {
@@ -100,6 +100,11 @@ class FileManager extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $form = $event->getForm();
         $result = $form->responseData;
+        
+        if(!$player->hasPermission("fm.action.open")) {
+            $player->sendMessage("§cYou have no permission to open this form");
+            return false;
+        }
 
         try {
             if(isset($this->browsingPlayers[$player->getName()])) {
