@@ -1,9 +1,10 @@
 name: FileManager
-api: [3.0.0, 4.0.0]
-version: 1.0.0
+#api: [3.0.0, 4.0.0]
+api: 3.0.0
+version: 1.0.1
 author: CodenameAurora
 authors: [VixikHD]
-main: aurora\filemanager\FileManager
+main: codenameaurora\filemanager\FileManager
 description: Manage with server files in game!
 
 commands:

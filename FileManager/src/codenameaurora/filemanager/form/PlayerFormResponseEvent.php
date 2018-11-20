@@ -18,9 +18,9 @@
 
 declare(strict_types=1);
 
-namespace aurora\filemanager\form;
+namespace codenameaurora\filemanager\form;
 
-use aurora\filemanager\FileManager;
+use codenameaurora\filemanager\FileManager;
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 

@@ -18,12 +18,11 @@
 
 declare(strict_types=1);
 
-namespace aurora\filemanager\form;
+namespace codenameaurora\filemanager\form;
 
 use const pocketmine\BASE_VERSION;
 use pocketmine\Player;
 use pocketmine\Server;
-use const pocketmine\VERSION;
 
 /**
  * Class Form
